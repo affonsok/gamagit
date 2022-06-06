@@ -1,19 +1,12 @@
 import React from "react";
-import { BrowserRouter , Link, Route, Router } from "react-router-dom";
-
+import { BrowserRouter , Link, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import repositories from "./pages/Repositories";
+import Repositories from "./pages/Repositories";
 
-
-export default function Routes() {
-    return(
-            <BrowserRouter>
-                <switch>
-                <Route path="/" exact component={Home} />
-                <Route path="/repositories" component={repositories} />
-                </switch>
-            </BrowserRouter>
-        
-    )
-
-}
+<BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Home />}>
+      <Route path="/Repositories" element={<Repositories />}>
+      </Route>
+    </Routes>
+</BrowserRouter>
