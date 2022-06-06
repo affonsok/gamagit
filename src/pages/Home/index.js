@@ -1,41 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import axios from "axios";
 import * as S from "./styled";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
-function App(props) {
-  const history = useHistory();
+export default function App() {
+  const navigate = useNavigate();
   const [ usuario, setUsuario] = useState("");
-  const [ erro, setErro ] = useState(false);
-  
-  function handlePesquisa() {
-    axios.get(`https://api.github.com/users/${usuario}/repos`)
-        .then(response => {
-          const repositories = response.data;
-          const repositoriesName = [];
-          repositories.map((repository) => {
-            repositoriesName.push(repository.name);
-          });
-        localStorage.setItem("repositoriesName", JSON.stringify(repositoriesName));
-        setErro(false);
-        history.push("./repositories");
-        })
-        .catch(err => {
-          setErro(true);
-        });
-    
-  }
-  return (
-      <S.HomeContainer>
-          <S.Content>    
-            <S.Input className="usuarioInput" placeholder='Usuário' value={usuario} onChange={e => setUsuario(e.target.value)} />
-            <S.Button type='button' onClick={handlePesquisa}  > Pesquisar </S.Button>
-          </S.Content>
-          <S.ErrorMsg> Ocorreu um erro, tente novamente. </S.ErrorMsg>
-          { erro ? <S.ErrorMsg> Ocorreu um erro, tente novamente. </S.ErrorMsg> : "" }
-      </S.HomeContainer>
-  );
-}
+  const [erro, setErro ] = useState(false);
 
-export default App;
+
+function handlePesquisa() {
+
+  axios.get(`https://api.github.com/users/${usuario}/repos`).then(response => {
+
+        const repositories = response.data;
+
+        const repositoriesName = []
+        repositories.forEach((item) => repositoriesName.push(item.name))
+
+        localStorage.setItem("repositoriesName", JSON.stringify(repositoriesName))
+        setErro(false)
+        navigate("./repositories")
+      })
+      .catch(err =>
+        setErro(true)
+        )
+
+}
+return (
+  <S.HomeContainer>
+          <S.Content>    
+            <S.Input className="usuarioInput" placeholder='Usuário' value={usuario} 
+            onChange={e => {setUsuario(e.target.value); setErro(false) }} />
+
+            <S.Button type='button' onClick={handlePesquisa}> Pesquisar </S.Button>
+          </S.Content>
+
+          {erro ? <S.ErrorMsg> Ocorreu um erro, tente novamente. </S.ErrorMsg> : "" }
+      </S.HomeContainer>
+);
+}
