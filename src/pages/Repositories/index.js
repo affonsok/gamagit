@@ -1,7 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import * as S from "./styled";
 
-export default function repositories(){
+export default function Repositories() {
+    const [ repositories, setRepositoires ] = useState([]);
+
+    useEffect(() => {
+        let repositoriesName = localStorage.getItem("repositoriesName");
+        repositoriesName = JSON.parse(repositoriesName);
+        
+    },[]);
+    
     return (
-        <h1> Repositories</h1>
+        <S.Container>
+        <S.Title> Repositórios </S.Title>
+        <S.List> 
+            <S.ListItem> Repositório 01 </S.ListItem>
+            <S.ListItem> Repositório 02 </S.ListItem>
+            <S.ListItem> Repositório 03 </S.ListItem>
+            <S.ListItem> Repositório 04 </S.ListItem>
+            <S.ListItem> Repositório 05 </S.ListItem>
+            <S.ListItem> Repositório 06 </S.ListItem>
+            <S.ListItem> Repositório 07 </S.ListItem>
+            <S.ListItem> Repositório 08 </S.ListItem>
+            <S.ListItem> Repositório 09 </S.ListItem>
+            <S.ListItem> Repositório 10 </S.ListItem>
+        </S.List>
+        </S.Container>
+
     )
 }
